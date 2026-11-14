@@ -447,11 +447,13 @@ function subscribe() {
   events.addEventListener('status', (event) => setConnectionStatus(JSON.parse(event.data)));
   events.addEventListener('key', (event) => {
     const { key, state } = JSON.parse(event.data);
-    if (!state || !tiles.has(key)) return;
+    // Always select a valid reported key. Some firmware sends the press as
+    // state 0, so using state as a gate here can silently ignore real presses.
+    if (!Number.isInteger(key) || key < 1 || key > 15 || !tiles.has(key)) return;
     selectKey(key);
     const tile = tiles.get(key).el;
     tile.classList.add('pressed');
-    setTimeout(() => tile.classList.remove('pressed'), 260);
+    setTimeout(() => tile.classList.remove('pressed'), state ? 260 : 180);
   });
   events.onerror = () => {
     connected = false;
