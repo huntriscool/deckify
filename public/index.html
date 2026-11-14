@@ -15,14 +15,14 @@
 </head>
 <body>
   <div class="app-shell">
-    <header class="topbar" aria-label="Dock connection status">
-      <div class="topbar-actions">
-        <span class="device-chip" id="deviceChip"><span class="device-dot"></span><span id="deviceText">Connecting…</span></span>
-        <button id="reconnect" type="button" class="btn btn-subtle btn-small" title="Reconnect to Shortcut Dock"><span class="reconnect-symbol" aria-hidden="true">↻</span><span class="reconnect-label">Reconnect</span></button>
-      </div>
-    </header>
-
     <main class="page">
+      <header class="connection-row" aria-label="Dock connection status">
+        <div class="topbar-actions">
+          <span class="device-chip" id="deviceChip"><span class="device-dot"></span><span id="deviceText">Connecting…</span></span>
+          <button id="reconnect" type="button" class="btn btn-subtle btn-small" title="Reconnect to Shortcut Dock"><span class="reconnect-symbol" aria-hidden="true">↻</span><span class="reconnect-label">Reconnect</span></button>
+        </div>
+      </header>
+
       <div class="workspace">
         <section class="dock-panel panel" aria-labelledby="dockHeading">
           <div class="panel-top">
