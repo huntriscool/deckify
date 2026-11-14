@@ -6,8 +6,6 @@
 
 Deckify lets you customise the images displayed on the dock's 15 keys. It is **not** a shortcut/action programming tool: image customisation does not change what the physical keys do. The UI runs in your browser, while a local Node.js process talks to the dock using USB HID. No account or cloud connection is required.
 
-![Deckify desktop preview](docs/screenshot.png)
-
 ## Getting started
 
 Requires **Node.js 20 or newer**. Use the latest stable LTS release. Windows is the primary target; macOS and Linux HID access will not been develoepd.
