@@ -14,27 +14,18 @@
 </head>
 <body>
   <div class="app-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-        <div><strong>deckify<span class="brand-dot">.</span></strong><span class="brand-caption">SHORTCUT DOCK STUDIO</span></div>
-      </div>
+    <div class="topbar" aria-label="Dock connection">
       <div class="topbar-actions">
         <span class="device-chip" id="deviceChip"><span class="device-dot"></span><span id="deviceText">Connecting…</span></span>
         <button id="reconnect" type="button" class="btn btn-subtle btn-small" title="Reconnect to Shortcut Dock"><span class="reconnect-symbol" aria-hidden="true">↻</span><span class="reconnect-label">Reconnect</span></button>
       </div>
-    </header>
+    </div>
 
-    <div class="page">
-      <div class="page-heading">
-        <div><div class="eyebrow"><span class="eyebrow-line"></span> YOUR WORKSPACE</div><h1>Your dock, your way<span class="accent">.</span></h1><p>Customise all 15 keys, preview every detail, and send your design straight to your dock.</p></div>
-        <span class="version">DECKIFY 2.0</span>
-      </div>
-
+    <main class="page">
       <div class="workspace">
         <section class="dock-panel panel" aria-labelledby="dockHeading">
           <div class="panel-top">
-            <div><div class="eyebrow">01 / LIVE PREVIEW</div><h2 id="dockHeading">Your shortcut dock</h2><p class="muted">Select a key to edit it. Changes save locally first.</p></div>
+            <div><div class="eyebrow">LIVE PREVIEW</div><h2 id="dockHeading">Your shortcut dock</h2><p class="muted">Click any key in the preview to customize it. Changes save locally first.</p></div>
             <span class="key-count">15 KEYS</span>
           </div>
           <div class="dock-stage">
@@ -44,14 +35,15 @@
           </div>
           <div class="workspace-foot">
             <span id="pendingLabel" class="pending-label"><span class="pending-dot"></span> Changes are saved on this computer</span>
-            <button id="syncAll" class="btn btn-outline" type="button">↗ Sync entire layout</button>
+            <span id="saveStatus" class="muted" aria-live="polite">Loading layout…</span>
+            <button id="syncAll" type="button" hidden aria-hidden="true" tabindex="-1">Sync entire layout</button>
           </div>
-          <div class="tip-bar" id="syncTip">Full sync sends every key shown in the preview, including blank keys, to your dock.</div>
+          <div class="tip-bar" id="syncTip" hidden></div>
         </section>
 
         <section class="editor-panel panel" aria-labelledby="selTitle">
           <div class="panel-top editor-heading">
-            <div><div class="eyebrow">02 / KEY EDITOR</div><h2 id="selTitle">Key 1</h2><p class="muted" id="keyPosition">Bottom left</p></div>
+            <div><div class="eyebrow">KEY EDITOR</div><h2 id="selTitle">Key 1</h2><p class="muted" id="keyPosition">Bottom left</p></div>
             <span class="edit-chip" id="keyState">Ready to edit</span>
           </div>
           <div class="editor-preview-row">
@@ -68,23 +60,21 @@
             <div class="field"><span class="field-label">Flip image</span><div class="check-row"><label class="mini-check"><input id="flipH" type="checkbox"><span>↔ Horizontal</span></label><label class="mini-check"><input id="flipV" type="checkbox"><span>↕ Vertical</span></label></div></div>
           </div>
           <div class="editor-tools"><button id="copyKey" class="btn btn-subtle btn-small" type="button">Copy key</button><button id="pasteKey" class="btn btn-subtle btn-small" type="button" disabled>Paste key</button><button id="undo" class="btn btn-subtle btn-small" type="button" disabled>Undo</button><button id="clearKey" class="btn btn-danger btn-small" type="button">Clear key</button></div>
-          <div class="editor-action"><button id="applyKey" class="btn btn-primary" type="button">Update this key on dock <span>↗</span></button><small>Your preview and your physical dock are separate until you send.</small></div>
+          <div class="editor-action"><button id="applyKey" class="btn btn-primary" type="button">Update this key on dock <span>↗</span></button><small>Your preview and your physical dock are separate until you send this key.</small></div>
         </section>
       </div>
 
       <section class="bottom-grid" aria-label="Device and workspace settings">
-        <div class="panel settings-panel"><div class="section-header"><div class="eyebrow">03 / DEVICE</div><h2>Dock settings</h2></div>
+        <div class="panel settings-panel"><div class="section-header"><div class="eyebrow">DEVICE</div><h2>Dock settings</h2></div>
           <div class="settings-layout">
             <div class="setting-item"><div class="setting-heading"><label for="brightness">Brightness</label><output for="brightness" id="briVal">60%</output></div><input id="brightness" type="range" min="0" max="100" value="60"><div class="range-end"><span>Dim</span><span>Bright</span></div></div>
-            <div class="setting-item"><label for="rotation" class="setting-heading">Panel rotation</label><select id="rotation"><option value="0">0° · No correction</option><option value="90">90° clockwise</option><option value="180">180°</option><option value="270">270° clockwise</option></select><small>Only change this if images appear sideways on the physical screen. Re-sync afterwards.</small></div>
+            <div class="setting-item"><label for="rotation" class="setting-heading">Panel rotation</label><select id="rotation"><option value="0">0° · No correction</option><option value="90">90° · clockwise</option><option value="180">180°</option><option value="270">270° · clockwise</option></select><small>Only change this if images appear sideways on the physical screen. Re-sync afterwards.</small></div>
             <div class="setting-item identify-setting"><div><label for="showNumbers">Show key numbers on dock</label><p>Temporary key labels for finding the matching physical button. Switching off restores your saved icons.</p></div><label class="switch" aria-label="Show key numbers on dock"><input type="checkbox" id="showNumbers" role="switch"><span class="switch-track"></span></label></div>
           </div>
         </div>
-        <div class="panel files-panel"><div class="section-header"><div class="eyebrow">04 / YOUR LAYOUT</div><h2>Save & transfer</h2></div><p class="muted">Your images and settings stay on this computer, not in a cloud account. Export a backup before moving to another device.</p><div class="file-actions"><button id="exportLayout" type="button" class="btn btn-outline">↓ Export layout</button><button id="importLayout" type="button" class="btn btn-outline">↑ Import layout</button><input type="file" id="importFile" accept="application/json,.json" hidden></div><div class="notice-private">⌁ Local-only workspace · No account required</div></div>
+        <div class="panel files-panel"><div class="section-header"><div class="eyebrow">YOUR LAYOUT</div><h2>Save &amp; transfer</h2></div><p class="muted">Your images and settings stay on this computer, not in a cloud account. Export a backup before moving to another device.</p><div class="file-actions"><button id="exportLayout" type="button" class="btn btn-outline">↗ Export layout</button><button id="importLayout" type="button" class="btn btn-outline">↙ Import layout</button><input type="file" id="importFile" accept="application/json,.json" hidden></div><div class="notice-private">♧ Local-only workspace · No account required</div></div>
       </section>
-      <details class="help"><summary>How does Deckify work? <span class="help-arrow">⌄</span></summary><div><p><strong>Edit:</strong> Select any key, choose artwork, and customise its label. Your changes are saved locally as you work.</p><p><strong>Update:</strong> Use “Update this key” for the selected key, or “Sync entire layout” to replace all 15 icons. The full sync also sends blank previews as blank keys.</p><p><strong>Identify:</strong> Turn on “Show key numbers on dock” to display the actual hardware key IDs temporarily. Turn it off to restore your customised layout. Bottom left is key 1 and top left is key 11.</p><p><strong>Connect:</strong> Plug in the Anko Shortcut Dock and close its official app before connecting. If images are sideways, change the panel rotation and re-sync.</p></div></details>
-    </div>
-    <footer class="footer"><span>DECKIFY · MADE FOR YOUR SHORTCUT DOCK</span><span id="saveStatus">Loading layout…</span></footer>
+    </main>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <div id="busyOverlay" class="busy-overlay" hidden aria-live="polite"><div class="busy-dialog" role="status"><div class="busy-top"><span class="busy-spinner"></span><strong id="busyTitle">Sending to dock…</strong></div><p id="busyDetail">Preparing your keys</p><div class="progress"><div id="busyBar"></div></div><small>Keep Deckify open until the transfer finishes.</small></div></div>
