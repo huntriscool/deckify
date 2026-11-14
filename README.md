@@ -1,4 +1,4 @@
-# Deckify 2.0
+# Deckify
 
 **A private, local icon studio for the Kmart Anko 15-key Shortcut Dock (USB `0100:1008`).**
 
