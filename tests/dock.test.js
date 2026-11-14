@@ -10,8 +10,9 @@ class FakeDevice extends EventEmitter {
   close() {}
 }
 
-test('all physical key reports map to the matching numbered app key', () => {
-  assert.deepEqual(Object.values(KEY_MAP), Array.from({ length: 15 }, (_, i) => i + 1));
+test('row-major hardware reports map to the dock printed key numbers', () => {
+  const physicalLayout = [3, 6, 9, 12, 15, 2, 5, 8, 11, 14, 1, 4, 7, 10, 13];
+  assert.deepEqual(Object.values(KEY_MAP), physicalLayout);
   const fake = new FakeDevice();
   const dock = new Dock({ devices: () => [{ usagePage: 0xff00, path: 'fake' }], HID: function HID() { return fake; } });
   const events = [];
@@ -22,7 +23,7 @@ test('all physical key reports map to the matching numbered app key', () => {
     packet[10] = 1;
     fake.emit('data', packet);
   }
-  assert.deepEqual(events, Array.from({ length: 15 }, (_, i) => ({ key: i + 1, state: 1 })));
+  assert.deepEqual(events, physicalLayout.map((key) => ({ key, state: 1 }))); 
   dock.close();
 });
 
