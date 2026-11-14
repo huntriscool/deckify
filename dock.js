@@ -4,9 +4,10 @@ const PID = 0x1008;
 const PKT = 1024;
 const PREFIX = Buffer.from([0x43, 0x52, 0x54, 0x00, 0x00]);
 
-// Hardware reports use 0x01..0x0f in row-major visual order. App key IDs
-// use the physical labels 1..15; the preview handles their physical layout.
-const KEY_MAP = Object.fromEntries(Array.from({ length: 15 }, (_, i) => [i + 1, i + 1]));
+// Hardware reports use 0x01..0x0f in row-major visual order. The app uses
+// the dock's printed key numbers, which are arranged column-wise in the preview.
+const PHYSICAL_LAYOUT = [3, 6, 9, 12, 15, 2, 5, 8, 11, 14, 1, 4, 7, 10, 13];
+const KEY_MAP = Object.fromEntries(PHYSICAL_LAYOUT.map((appKey, index) => [index + 1, appKey]));
 
 function loadHID() { return require('node-hid'); }
 
