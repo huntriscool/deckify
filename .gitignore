@@ -1,0 +1,7 @@
+node_modules/
+dock_layout.json
+.*.tmp
+*.log
+.DS_Store
+__MACOSX/
+coverage/
