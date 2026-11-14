@@ -5,7 +5,8 @@ const PID = 0x1008
 const PKT = 1024
 const PREFIX = Buffer.from([0x43, 0x52, 0x54, 0x00, 0x00]) // "CRT\0\0"
 
-// hardware key code (input report byte 9) -> key number 1..15
+// Hardware key code (input report byte 9) -> Deckify's logical key number.
+// This logical numbering is row-major: top row 11-15, middle 6-10, bottom 1-5.
 const KEY_MAP = {
   0x01: 0x0b,
   0x02: 0x0c,
@@ -22,6 +23,17 @@ const KEY_MAP = {
   0x0d: 0x03,
   0x0e: 0x04,
   0x0f: 0x05,
+}
+
+// The dock's screen slots are wired column-major, bottom-to-top. Convert
+// Deckify's visual row-major key number to the hardware image slot.
+function deviceSlotForKey(key) {
+  if (!Number.isInteger(key) || key < 1 || key > 15) {
+    throw new RangeError('Key must be an integer between 1 and 15')
+  }
+  const row = Math.floor((key - 1) / 5)
+  const column = (key - 1) % 5
+  return column * 3 + row + 1
 }
 
 function loadHID() {
@@ -121,4 +133,4 @@ class MockDock {
   close() {}
 }
 
-module.exports = { Dock, MockDock, KEY_MAP, PKT, PREFIX }
+module.exports = { Dock, MockDock, KEY_MAP, PKT, PREFIX, deviceSlotForKey }
