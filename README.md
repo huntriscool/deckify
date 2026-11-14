@@ -14,6 +14,6 @@ No dock handy? `set DOCK_MOCK=1` then `npm start` runs with a fake dock.
 
 ## Notes
 - Layout and icons are saved in `dock_layout.json` next to `server.js`.
-- "Panel rotation fix" defaults to 90 degrees (what your dock needed).
+- "Panel rotation fix" defaults to 90 degrees
 - "Show key numbers on dock" helps you pick the matching key-numbering option.
 - The server only listens on localhost, and API calls need a per-run token.
