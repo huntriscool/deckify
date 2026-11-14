@@ -1,0 +1,65 @@
+/* Make the dock preview use the available panel width so its buttons are easier to see and click. */
+.dock-panel {
+  min-width: 0;
+}
+
+.dock-stage {
+  align-items: stretch;
+  min-height: 0;
+  padding: 28px 0 20px;
+}
+
+.dock-direction {
+  text-align: center;
+}
+
+.dock-housing {
+  width: 100%;
+  max-width: none;
+  padding: clamp(14px, 2.2vw, 30px);
+}
+
+.dock-grid {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 5 / 3;
+  gap: clamp(8px, 1.2vw, 16px);
+}
+
+.dock-grid .key {
+  width: 100%;
+  height: auto;
+  border-radius: clamp(9px, 1vw, 16px);
+}
+
+.dock-grid .key .num {
+  top: clamp(5px, 0.6vw, 9px);
+  left: clamp(5px, 0.6vw, 9px);
+  font-size: clamp(11px, 1vw, 15px);
+  padding: 2px 6px;
+}
+
+@media (max-width: 1100px) {
+  .dock-stage {
+    min-height: 0;
+  }
+
+  .dock-housing {
+    width: 100%;
+  }
+
+  .dock-grid {
+    gap: clamp(8px, 1.5vw, 14px);
+  }
+}
+
+@media (max-width: 520px) {
+  .dock-housing {
+    padding: 12px;
+    border-radius: 17px;
+  }
+
+  .dock-grid {
+    gap: 6px;
+  }
+}
