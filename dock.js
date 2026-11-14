@@ -5,36 +5,10 @@ const PID = 0x1008
 const PKT = 1024
 const PREFIX = Buffer.from([0x43, 0x52, 0x54, 0x00, 0x00]) // "CRT\0\0"
 
-// Hardware key code (input report byte 9) -> Deckify's logical key number.
-// This logical numbering is row-major: top row 11-15, middle 6-10, bottom 1-5.
-const KEY_MAP = {
-  0x01: 0x0b,
-  0x02: 0x0c,
-  0x03: 0x0d,
-  0x04: 0x0e,
-  0x05: 0x0f,
-  0x06: 0x06,
-  0x07: 0x07,
-  0x08: 0x08,
-  0x09: 0x09,
-  0x0a: 0x0a,
-  0x0b: 0x01,
-  0x0c: 0x02,
-  0x0d: 0x03,
-  0x0e: 0x04,
-  0x0f: 0x05,
-}
-
-// The dock's screen slots are wired column-major, bottom-to-top. Convert
-// Deckify's visual row-major key number to the hardware image slot.
-function deviceSlotForKey(key) {
-  if (!Number.isInteger(key) || key < 1 || key > 15) {
-    throw new RangeError('Key must be an integer between 1 and 15')
-  }
-  const row = Math.floor((key - 1) / 5)
-  const column = (key - 1) % 5
-  return column * 3 + row + 1
-}
+// The device reports the physical key number shown by "Show key numbers"
+// (1..15). Keep that ID unchanged so physical presses select the matching
+// logical key in the application. Visual placement is handled by the UI.
+const KEY_MAP = Object.fromEntries(Array.from({ length: 15 }, (_, i) => [i + 1, i + 1]))
 
 function loadHID() {
   return require('node-hid')
@@ -96,6 +70,9 @@ class Dock {
   }
 
   setKey(key, jpeg) {
+    if (!Number.isInteger(key) || key < 1 || key > 15) {
+      throw new RangeError('Key must be an integer between 1 and 15')
+    }
     jpeg = Buffer.from(jpeg)
     const len = Buffer.alloc(4)
     len.writeUInt32BE(jpeg.length)
@@ -133,4 +110,4 @@ class MockDock {
   close() {}
 }
 
-module.exports = { Dock, MockDock, KEY_MAP, PKT, PREFIX, deviceSlotForKey }
+module.exports = { Dock, MockDock, KEY_MAP, PKT, PREFIX }
