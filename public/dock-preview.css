@@ -1,78 +1,69 @@
-/* Hardware-inspired dock casing and larger, more tactile keycaps. */
+/* Match the supplied enlarged dock mockup: one broad recessed shell with big, evenly spaced keycaps. */
+.dock-panel {
+  overflow: hidden;
+}
+
 .dock-stage {
-  padding: clamp(18px, 2.4vw, 32px) 0 clamp(16px, 2vw, 26px);
-  gap: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 0;
+  padding: 14px 0 12px;
 }
 
 .dock-direction {
-  margin-bottom: clamp(12px, 1.4vw, 20px);
-  color: #a4b2c3;
-  text-shadow: 0 1px 5px #0008;
+  margin: 0;
+  padding: 10px 0 18px;
+  text-align: center;
+  color: #94a3bd;
+  font-size: clamp(12px, 1.2vw, 18px);
+  font-weight: 800;
+  letter-spacing: 0.28em;
 }
 
 .dock-housing {
-  position: relative;
-  isolation: isolate;
-  padding: clamp(18px, 2.6vw, 34px);
-  border: 2px solid #43505f;
-  border-radius: clamp(20px, 2.4vw, 30px);
-  background:
-    linear-gradient(155deg, #303b49 0%, #171e28 16%, #090d13 54%, #18212b 100%);
-  box-shadow:
-    0 24px 44px #0009,
-    0 5px 12px #0008,
-    inset 0 2px 3px #ffffff20,
-    inset 0 -5px 12px #0009;
-}
-
-.dock-housing::before {
-  content: "";
-  position: absolute;
-  inset: 7px;
-  border: 1px solid #ffffff0a;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: -1;
+  width: 100%;
+  max-width: none;
+  padding: clamp(16px, 2.4vw, 34px);
+  border: 2px solid #3c4657;
+  border-radius: clamp(22px, 3vw, 38px);
+  background: linear-gradient(145deg, #303949 0%, #1a202b 22%, #111722 70%, #1d2532 100%);
+  box-shadow: inset 0 2px 3px #ffffff18, inset 0 -7px 16px #0008, 0 12px 30px #0005;
 }
 
 .dock-grid {
-  gap: clamp(9px, 1.35vw, 18px);
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 5 / 2.7;
+  gap: clamp(10px, 1.8vw, 24px);
 }
 
 .dock-grid .key {
-  border: 2px solid #4a5664;
-  border-radius: clamp(11px, 1.25vw, 17px);
-  background: linear-gradient(145deg, #141b25, #080b11 72%);
-  box-shadow:
-    0 5px 8px #0009,
-    inset 0 1px 2px #ffffff20,
-    inset 0 -2px 4px #0009;
-  transition: border-color 0.16s, transform 0.16s, box-shadow 0.16s, background 0.16s;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border: 2px solid #465165;
+  border-radius: clamp(20px, 3vw, 40px);
+  background: linear-gradient(145deg, #202836 0%, #151c27 55%, #101620 100%);
+  box-shadow: inset 0 2px 5px #ffffff1a, inset 0 -5px 9px #0007, 0 6px 12px #0006;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
 }
 
 .dock-grid .key:hover:not(:disabled) {
-  border-color: #9aa8b7;
   transform: translateY(-2px);
-  box-shadow:
-    0 8px 13px #000a,
-    inset 0 1px 2px #ffffff26,
-    inset 0 -2px 4px #0009;
+  border-color: #7d8ba1;
+  box-shadow: inset 0 2px 5px #ffffff24, inset 0 -5px 9px #0007, 0 9px 16px #0007;
 }
 
 .dock-grid .key:active:not(:disabled),
 .dock-grid .key.pressed {
   transform: translateY(1px);
-  border-color: #d9e5ee;
-  box-shadow: inset 0 3px 8px #000b, 0 1px 2px #0008;
+  box-shadow: inset 0 4px 10px #0009, 0 2px 4px #0007;
 }
 
 .dock-grid .key.selected {
   border-color: var(--accent);
-  box-shadow:
-    0 0 0 3px #74e3c34a,
-    0 0 22px #74e3c355,
-    0 5px 9px #0009,
-    inset 0 1px 2px #ffffff24;
+  box-shadow: 0 0 0 3px #74e3c34a, 0 0 24px #74e3c34a, inset 0 2px 5px #ffffff22, 0 6px 12px #0006;
 }
 
 .dock-grid .key canvas {
@@ -80,47 +71,45 @@
 }
 
 .dock-grid .key .num {
-  top: clamp(6px, 0.7vw, 10px);
-  left: clamp(6px, 0.7vw, 10px);
-  padding: 2px 6px;
+  top: clamp(7px, 0.8vw, 12px);
+  left: clamp(7px, 0.8vw, 12px);
+  padding: 2px 7px;
   font-size: clamp(12px, 1.1vw, 16px);
-  line-height: 1.4;
-  border: 1px solid #ffffff1a;
+  border: 1px solid #ffffff20;
   background: #080c13d9;
-  box-shadow: 0 2px 5px #0008;
+  box-shadow: 0 2px 6px #0007;
 }
 
 .dock-lip {
-  height: 5px;
-  margin-top: clamp(15px, 1.8vw, 24px);
-  background: linear-gradient(90deg, transparent, #465363 12%, #283342 50%, #465363 88%, transparent);
-  box-shadow: 0 2px 5px #0009;
+  height: clamp(38px, 5vw, 68px);
+  max-width: none;
+  margin: clamp(16px, 2vw, 26px) 0 0;
+  border: 2px solid #414c60;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #293342, #171e29 62%, #101620);
+  box-shadow: inset 0 2px 3px #ffffff1a, inset 0 -4px 8px #0008, 0 4px 10px #0005;
 }
 
 .dock-base {
-  color: #718198;
-  padding-top: 15px;
+  width: 100%;
+  padding: 14px clamp(14px, 1.8vw, 24px) 0;
+  color: #8694b0;
+  font-size: clamp(10px, 1vw, 14px);
 }
 
 .dock-base .dock-brand {
-  color: #a9b5c4;
+  color: #9aa8c2;
+  font-size: clamp(16px, 1.6vw, 24px);
+}
+
+.workspace-foot {
+  margin-top: 0;
+  padding-top: 14px;
 }
 
 @media (max-width: 520px) {
-  .dock-stage {
-    padding-top: 18px;
-  }
-
-  .dock-housing {
-    padding: 14px;
-  }
-
-  .dock-grid {
-    gap: 6px;
-  }
-
-  .dock-grid .key {
-    border-width: 1px;
-    border-radius: 9px;
-  }
+  .dock-stage { padding: 12px 0; }
+  .dock-housing { padding: 12px; border-radius: 22px; }
+  .dock-grid { gap: 7px; }
+  .dock-grid .key { border-radius: 16px; }
 }
