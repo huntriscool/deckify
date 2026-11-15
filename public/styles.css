@@ -75,25 +75,22 @@ input[type='range'] {
   flex-direction: column;
 }
 
+/* The page is the grid. .workspace and .bottom-grid are transparent wrappers,
+   so their children (dock, editor, settings, files) can be placed directly. */
 .page {
   width: min(1420px, 100%);
   padding: 44px 30px 70px;
   margin: 0 auto;
   flex: 1;
-}
-
-.workspace {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  align-content: start;
   gap: 22px;
-  align-items: stretch;
 }
 
+.workspace,
 .bottom-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(350px, 1fr);
-  gap: 18px;
-  margin-top: 19px;
+  display: contents;
 }
 
 .panel {
@@ -132,7 +129,6 @@ input[type='range'] {
   justify-content: flex-end;
   align-items: center;
   min-height: 42px;
-  margin: 0 0 18px;
 }
 
 .topbar-actions {
@@ -175,7 +171,6 @@ input[type='range'] {
 
 /* ===== Dock preview ===== */
 .dock-panel {
-  width: 700px;
   min-width: 0;
   padding: clamp(16px, 2.5vw, 24px);
   overflow: hidden;
@@ -215,6 +210,9 @@ input[type='range'] {
 }
 
 .dock-housing {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 1.5vw, 18px);
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -232,9 +230,9 @@ input[type='range'] {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-template-rows: repeat(3, minmax(0, 1fr));
-  width: 100%;
+  flex: 1 1 0;
+  min-width: 0;
   max-width: 480px;
-  margin: 0 auto;
   aspect-ratio: 5 / 3;
   gap: clamp(6px, 1vw, 12px);
 }
@@ -341,36 +339,25 @@ body:has(#showNumbers:checked) .dock-grid .key .num {
   display: none;
 }
 
+/* Side bar on the left of the keys, like the real dock */
 .dock-lip {
-  height: clamp(22px, 3vw, 34px);
-  max-width: 480px;
-  margin: clamp(16px, 2vw, 26px) 0 0;
+  order: -1;
+  flex: none;
+  align-self: stretch;
+  width: clamp(26px, 3.5vw, 40px);
   border: 2px solid #414c60;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #293342, #171e29 62%, #101620);
+  border-radius: clamp(8px, 1.2vw, 14px);
+  background: linear-gradient(90deg, #293342, #171e29 62%, #101620);
   box-shadow:
     inset 0 2px 3px #ffffff1a,
     inset 0 -4px 8px #0008,
     0 4px 10px #0005;
 }
 
-.dock-base {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 14px clamp(14px, 1.8vw, 24px) 0;
-  color: #8694b0;
-  letter-spacing: 0.16em;
-  font-size: clamp(10px, 1vw, 14px);
-}
-
-.dock-brand {
-  color: #9aa8c2;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  font-size: clamp(16px, 1.6vw, 24px);
+/* Hidden: footer under the keys and the "saved" status text */
+.dock-base,
+#saveStatus {
+  display: none;
 }
 
 .workspace-foot {
@@ -668,7 +655,7 @@ body:has(#showNumbers:checked) .dock-grid .key .num {
 
 .settings-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 25px;
 }
 
@@ -710,7 +697,6 @@ body:has(#showNumbers:checked) .dock-grid .key .num {
 }
 
 .identify-setting {
-  grid-column: 1 / -1;
   border-top: 1px solid #303947;
   padding-top: 20px;
   display: flex;
@@ -895,11 +881,39 @@ body:has(#showNumbers:checked) .dock-grid .key .num {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 1100px) {
-  .bottom-grid {
-    grid-template-columns: 1fr;
+/* Wide screens: dock on the left, settings + files stacked beside it, editor underneath */
+@media (min-width: 1101px) {
+  .page {
+    grid-template-columns: minmax(0, 700px) minmax(360px, 1fr);
   }
 
+  .connection-row {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .dock-panel {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+  }
+
+  .settings-panel {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .files-panel {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .editor-panel {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+}
+
+@media (max-width: 1100px) {
   .editor-action {
     margin-top: 10px;
   }
@@ -908,10 +922,6 @@ body:has(#showNumbers:checked) .dock-grid .key .num {
 @media (max-width: 600px) {
   .page {
     padding: 22px 14px 36px;
-  }
-
-  .connection-row {
-    margin-bottom: 14px;
   }
 
   .topbar-actions {
@@ -964,8 +974,7 @@ body:has(#showNumbers:checked) .dock-grid .key .num {
   }
 
   .dock-lip {
-    height: 30px;
-    margin-top: 12px;
+    width: 22px;
   }
 
   .workspace-foot {
@@ -987,14 +996,6 @@ body:has(#showNumbers:checked) .dock-grid .key .num {
 
   .editor-fields {
     gap: 17px;
-  }
-
-  .settings-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .identify-setting {
-    grid-column: auto;
   }
 }
 
