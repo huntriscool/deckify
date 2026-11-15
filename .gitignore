@@ -5,3 +5,4 @@ dock_layout.json
 .DS_Store
 __MACOSX/
 coverage/
+package-lock.json
